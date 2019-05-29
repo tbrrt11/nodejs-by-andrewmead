@@ -13,12 +13,12 @@ yargs.command({
         }
     },
     handler(argv){
-        geocode(argv.address, (error, data) => {
+        geocode(argv.address, (error, { latitude, longitude, location }) => {
             if (error) {
                 console.log(error)
             } else {
-                console.log("Forecast for", data.location)
-                forecast(data.latitude, data.longitude, (error, data) => {
+                console.log("Forecast for", location)
+                forecast(latitude, longitude, (error, data) => {
                     if (error) {
                         console.log(error)
                     } else {
@@ -37,15 +37,15 @@ const address = process.argv[2]
 if (!address) {
     console.log('Please provide an address.')
 } else {
-    geocode(process.argv[2], (error, geocodeData) => {
+    geocode(process.argv[2], (error, { latitude, longitude, location }) => {
         if (error) {
            return console.log(error)
         }
-        forecast(geocodeData.latitude, geocodeData.longitude, (error, forecastData) => {
+        forecast(latitude, longitude, (error, forecastData) => {
             if (error) {
                 return console.log(error)
             }
-            console.log("Forecast for", geocodeData.location, '\n', forecastData)
+            console.log("Forecast for", location, '\n', forecastData)
         })
     })    
 }
