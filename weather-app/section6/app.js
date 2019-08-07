@@ -40,12 +40,13 @@ if (!address) {
     geocode(process.argv[2], (error, { latitude, longitude, location }) => {
         if (error) {
            return console.log(error)
+        } else {
+            forecast(latitude, longitude, (error, forecastData) => {
+                if (error) {
+                    return console.log(error)
+                }
+                console.log("Forecast for", location, '\n', forecastData)
+            })
         }
-        forecast(latitude, longitude, (error, forecastData) => {
-            if (error) {
-                return console.log(error)
-            }
-            console.log("Forecast for", location, '\n', forecastData)
-        })
     })    
 }
