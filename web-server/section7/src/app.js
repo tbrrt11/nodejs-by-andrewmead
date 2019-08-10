@@ -2,6 +2,9 @@ const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
 
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+
 const app = express()
 
 // Define paths for Express config
@@ -39,9 +42,53 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide a search term.'
+        })
+    }
+
+    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return res.send({ error })
+        } else {
+            forecast(latitude, longitude, (error, data) => {
+                if (error) {
+                    return res.send({ error })
+                } else {
+                    return res.send({
+                        forecast: data,
+                        location
+                    })
+                }
+            })
+        }
+    })
+})
+
+app.get('/products/', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term.'
+        })
+    }
+    
     res.send({
-        forecast: 'This is your forecast.',
-        location: 'Curitiba, Brazil'
+        products: [req.query.search]
+    })
+})
+
+app.get('/help/*', (req, res) => {
+    res.render('help404', {
+        title: 'Help 404',
+        name: 'Thiago Barreto'
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: 'Page not found 404',
+        name: 'Thiago Barreto'
     })
 })
 
