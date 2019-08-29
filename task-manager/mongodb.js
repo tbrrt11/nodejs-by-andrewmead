@@ -32,7 +32,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     // })
 
     db.collection('tasks').deleteOne({
-        description: 'Do the laundry'
+        description: 'Do the laundry',
     }).then((result) => {
         console.log(result)
     }).catch((error) => {
