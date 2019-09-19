@@ -14,19 +14,14 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
 
-// const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-// const myFunction = async () => {
-//     const password = 'Red12345!'
-//     const hashedPassword = await bcrypt.hash(password, 8)
+const myFunction = async () => {
+    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 seconds' })
+    console.log(token)
 
-//     console.log(password)
-//     console.log(typeof(password))
-//     console.log(hashedPassword)
-//     console.log(typeof(hashedPassword))
+    const data = jwt.verify(token, 'thisismynewcourse')
+    console.log(data)
+}
 
-//     const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
-//     console.log(isMatch)
-// }
-
-// myFunction()
+myFunction()
