@@ -1,20 +1,16 @@
 const socket = io() // establishes websocket connection
 
-const message = document.querySelector('input')
-
 document.querySelector('#message-form').addEventListener('submit', (e) => {
     e.preventDefault()
+
+    const message = e.target.elements.message
 
     socket.emit('sendMessage', message.value)
 
     message.value = ''
 })
 
-socket.on('receiveMessage', (message) => {
-    console.log(message)
-})
-
-socket.on('welcomeUser', (message) => {
+socket.on('message', (message) => {
     console.log(message)
 })
 

@@ -21,14 +21,12 @@ let count = 0;
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
-    let message = "Welcome!"
-
-    socket.emit('welcomeUser', message)
+    socket.emit('message', "Welcome!")
 
     socket.on('sendMessage', (message) => {
         console.log("New message received.")
 
-        io.emit('receiveMessage', message)
+        io.emit('message', message)
     })
 
     // socket.emit('countUpdated', count)
