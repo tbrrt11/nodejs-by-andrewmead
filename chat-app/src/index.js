@@ -25,6 +25,12 @@ io.on('connection', (socket) => {
 
     socket.emit('welcomeUser', message)
 
+    socket.on('sendMessage', (message) => {
+        console.log("New message received.")
+
+        io.emit('receiveMessage', message)
+    })
+
     // socket.emit('countUpdated', count)
 
     // socket.on('increment', () => {
