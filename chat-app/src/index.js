@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendLocation', (location, callback) => {
-        io.emit('message', `https://www.google.com/maps?q=${location.latitude},${location.longitude}`)
+        io.emit('locationMessage', `https://www.google.com/maps?q=${location.latitude},${location.longitude}`)
         callback()
     })
 
@@ -47,8 +47,6 @@ io.on('connection', (socket) => {
         io.emit('message', 'A user has left!')
     }) 
 })
-
-
 
 server.listen(port, () => {
     console.log('Server is up on port ' + port)
